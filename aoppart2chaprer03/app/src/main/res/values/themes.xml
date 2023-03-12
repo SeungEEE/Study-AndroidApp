@@ -13,4 +13,6 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.Aoppart2chaprer03.NoActionBar" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
 </resources>
