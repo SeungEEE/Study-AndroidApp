@@ -129,6 +129,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="7dp"
                 android:background="@drawable/button_background"
+                android:onClick="buttonClicked"
                 android:stateListAnimator="@null"
                 android:text="8"
                 android:textColor="@color/textColor"
@@ -179,6 +180,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="7dp"
                 android:background="@drawable/button_background"
+                android:onClick="buttonClicked"
                 android:stateListAnimator="@null"
                 android:text="5"
                 android:textColor="@color/textColor"
@@ -229,6 +231,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="7dp"
                 android:background="@drawable/button_background"
+                android:onClick="buttonClicked"
                 android:stateListAnimator="@null"
                 android:text="2"
                 android:textColor="@color/textColor"
@@ -279,6 +282,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="7dp"
                 android:background="@drawable/button_background"
+                android:onClick="buttonClicked"
                 android:stateListAnimator="@null"
                 android:text="0"
                 android:textColor="@color/textColor"
@@ -339,16 +343,16 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/historyClearButton"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/closeButton">
 
             <LinearLayout
                 android:id="@+id/historyLinearLayout"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
         </ScrollView>
 

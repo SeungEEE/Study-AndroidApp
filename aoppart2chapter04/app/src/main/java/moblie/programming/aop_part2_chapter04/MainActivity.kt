@@ -5,10 +5,15 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.room.Room
+import moblie.programming.aop_part2_chapter04.model.History
+import java.util.function.BinaryOperator
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,12 +25,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val historyLayout: View by lazy {
-        findViewById(R.id.historyLayout)
+        findViewById<View>(R.id.historyLayout)
     }
 
-    private val historyLinearLayout: View by lazy {
-        findViewById(R.id.historyLinearLayout)
+    private val historyLinearLayout: LinearLayout by lazy {
+        findViewById<LinearLayout>(R.id.historyLinearLayout)
     }
+
+    lateinit var db: AppDatabase
 
     private var isOperator = false
     private var hasOperator = false
@@ -33,6 +40,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        db = Room.databaseBuilder(
+            applicationContext,
+            AppDatabase::class.java,
+            "historyDB"
+        ).build()
     }
 
     fun buttonClicked(v: View) {
@@ -63,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
         isOperator = false
 
-        val expressionText = expressionTextView.text.split("")
+        val expressionText = expressionTextView.text.split(" ")
 
         if (expressionText.isNotEmpty() && expressionText.last().length >= 15) {
             Toast.makeText(this, "15자리 까지만 사용할 수 있습니다.", Toast.LENGTH_SHORT).show()
@@ -78,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun operatorButtonClicked(operator: String) {
-        if(expressionTextView.text.isEmpty()) {
+        if (expressionTextView.text.isEmpty()) {
             return
         }
 
@@ -99,9 +112,10 @@ class MainActivity : AppCompatActivity() {
         val ssb = SpannableStringBuilder(expressionTextView.text)
         ssb.setSpan(
             ForegroundColorSpan(getColor(R.color.green)),
-            expressionTextView.text.length -1,
+            expressionTextView.text.length - 1,
             expressionTextView.text.length,
-            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
 
         expressionTextView.text = ssb
 
@@ -128,6 +142,10 @@ class MainActivity : AppCompatActivity() {
 
         val expressionText = expressionTextView.text.toString()
         val resultText = calculateExpression()
+
+        Thread(Runnable {
+            db.historyDao().insertHistory(History(null, expressionText, resultText))
+        }).start()
 
         resultTextView.text = ""
         expressionTextView.text = resultText
@@ -168,17 +186,29 @@ class MainActivity : AppCompatActivity() {
 
     fun historyButtonClicked(v: View) {
         historyLayout.isVisible = true
+        historyLinearLayout.removeAllViews()
+        Thread(Runnable {
+            db.historyDao().getAll().reversed().forEach {
+                runOnUiThread {
+                    val historyView = LayoutInflater.from(this).inflate(R.layout.history_row, null, false)
+                    historyView.findViewById<TextView>(R.id.expressionTextView).text = it.expression
+                    historyView.findViewById<TextView>(R.id.resultTextView).text = "= ${it.result}"
 
-        // TODO 디비에서 모든 기록 가져오기
-        // TODO 뷰에 모든 기록 할당하기
+                    historyLinearLayout.addView(historyView)
+                }
+            }
+        }).start()
     }
     fun closeHistoryButtonClicked(v: View) {
         historyLayout.isVisible = false
     }
 
     fun historyClearButtonClicked(v: View){
-        // TODO 디비에서 모든 기록 삭제
-        // TODO 뷰에서 모든 기록 삭제
+        historyLinearLayout.removeAllViews()
+
+        Thread(Runnable {
+            db.historyDao().deleteAll()
+        }).start()
     }
 }
 
