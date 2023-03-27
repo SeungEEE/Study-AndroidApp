@@ -124,7 +124,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun resultButtonClicked(v: View) {
-        val expressionTexts = expressionTextView.text.split("")
+        val expressionTexts = expressionTextView.text.split(" ")
 
         if (expressionTextView.text.isEmpty() || expressionTexts.size == 1) {
             return
@@ -155,7 +155,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun calculateExpression(): String {
-        val expressionTexts = expressionTextView.text.split("")
+        val expressionTexts = expressionTextView.text.split(" ")
 
         if (hasOperator.not() || expressionTexts.size != 3) {
             return ""
