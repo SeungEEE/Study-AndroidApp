@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.PackageManagerCompat
 
@@ -60,10 +61,26 @@ class MainActivity : AppCompatActivity() {
                     showPermissionContextPopup()
                 }
                 else -> {
-                    requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1000)
+                    ActivityCompat.requestPermissions(this,
+                        arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                        1000
+                    )
                 }
             }
         }
+    }
+
+    private fun initStartPhotoFrameModeButton() {
+        //  포토 프레임 버튼
+        startPhotoFrameModeButton.setOnClickListener {
+            val intent = Intent(this, PhotoFrameActivity::class.java)
+            imageUriList.forEachIndexed { index, uri ->
+                intent.putExtra("photo$index", uri.toString())
+            }
+            intent.putExtra("phoroListSize", imageUriList.size)
+            startActivity(intent)
+        }
+
     }
 
     override fun onRequestPermissionsResult(
@@ -117,14 +134,14 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
                 }
-
-
             }
             else -> {
                 Toast.makeText(this, "사진을 가져오지 못했습니다.", Toast.LENGTH_SHORT).show()
             }
         }
     }
+
+
 
     private fun showPermissionContextPopup() {
         AlertDialog.Builder(this)
@@ -136,10 +153,5 @@ class MainActivity : AppCompatActivity() {
             .setNegativeButton("취소하기") { _, _ -> }
             .create()
             .show()
-    }
-
-    private fun initStartPhotoFrameModeButton() {
-        // TODO 포토 프레임 버튼
-
     }
 }
