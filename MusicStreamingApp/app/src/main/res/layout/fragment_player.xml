@@ -52,17 +52,17 @@
         app:layout_constraintTop_toBottomOf="@id/trackTextView" />
 
     <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="36dp"
         android:layout_marginEnd="36dp"
+        android:translationY="50dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp"
         app:layout_constraintBottom_toBottomOf="@id/topBackgroundView"
         app:layout_constraintDimensionRatio="H, 1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:cardElevation="10dp"
-        app:cardCornerRadius="5dp"
-        android:translationY="50dp"
-        android:layout_width="0dp"
-        android:layout_height="0dp">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/coverImageView"
@@ -71,6 +71,91 @@
             tools:background="@color/purple_200" />
 
     </androidx.cardview.widget.CardView>
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/playerView"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:use_controller="false" />
+
+    <SeekBar
+        android:id="@+id/playerSeekBar"
+        app:layout_constraintBottom_toTopOf="@id/playerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginBottom="30dp"
+        android:layout_width="0dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:progressDrawable="@drawable/player_seek_background"
+        android:progress="40"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:layout_height="wrap_content" />
+
+    <SeekBar
+        android:id="@+id/playListSeekBar"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:clickable="false"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
+        android:progressTint="@color/purple_200"
+        android:thumbTint="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/playerView"
+        tools:progress="40" />
+
+    <ImageView
+        android:id="@+id/playControlImageView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/baseline_play_arrow_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/playerView"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/skipNextImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/baseline_skip_next_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintStart_toEndOf="@id/playControlImageView"
+        app:layout_constraintTop_toTopOf="@id/playerView"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/skipPrevImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/baseline_skip_previous_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/playControlImageView"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/playerView"
+        app:tint="@color/black" />
+
+    <ImageView
+        android:id="@+id/playlistImageView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:src="@drawable/baseline_playlist_play_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/playerView"
+        app:tint="@color/black" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
