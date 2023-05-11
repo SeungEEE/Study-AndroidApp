@@ -57,6 +57,7 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
                                 val modelList = it.musics.mapIndexed { index, musicEntity ->
                                     musicEntity.mapper(index.toLong())
                                 }
+
                             }
                         }
 
