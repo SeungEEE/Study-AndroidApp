@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import moblie.programming.musicstreamingapp.databinding.FragmentPlayerBinding
 import moblie.programming.musicstreamingapp.service.MusicDto
 import moblie.programming.musicstreamingapp.service.MusicService
@@ -18,6 +19,7 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
 
     private var binding: FragmentPlayerBinding? = null
     private var isWatchingPlayListView = true
+    private lateinit var playListAdapter: PlayListAdapter
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -25,8 +27,20 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
         binding = fragmentPlayerBinding
 
         initPlayListButton(fragmentPlayerBinding)
+        initRecyclerView(fragmentPlayerBinding)
 
         getVideoListFromServer()
+    }
+
+    private fun initRecyclerView(fragmentPlayerBinding: FragmentPlayerBinding) {
+        playListAdapter = PlayListAdapter {
+            // 음악을 재생
+        }
+
+        fragmentPlayerBinding.playListRecyclerView.apply {
+            adapter = playListAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
     }
 
     private fun initPlayListButton(fragmentPlayerBinding: FragmentPlayerBinding) {
@@ -57,6 +71,8 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
                                 val modelList = it.musics.mapIndexed { index, musicEntity ->
                                     musicEntity.mapper(index.toLong())
                                 }
+
+                                playListAdapter.submitList(modelList)
 
                             }
                         }
