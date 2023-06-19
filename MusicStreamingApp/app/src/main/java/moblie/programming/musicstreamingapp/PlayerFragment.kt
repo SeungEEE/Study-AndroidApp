@@ -61,7 +61,7 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
             .build()
 
         retrofit.create(MusicService::class.java)
-            .also {
+            .also { it ->
                 it.listMusics()
                     .enqueue(object: Callback<MusicDto> {
                         override fun onResponse(call: Call<MusicDto>, response: Response<MusicDto>) {
@@ -73,14 +73,12 @@ class PlayerFragment: Fragment(R.layout.fragment_player) {
                                 }
 
                                 playListAdapter.submitList(modelList)
-
                             }
                         }
 
-                        override fun onFailure(call: Call<MusicDto>, t: Throwable) {
+                        /*override fun onFailure(call: Call<MusicDto>, t: Throwable) {
                             TODO("Not yet implemented")
-                        }
-
+                        }*/
                     })
             }
     }

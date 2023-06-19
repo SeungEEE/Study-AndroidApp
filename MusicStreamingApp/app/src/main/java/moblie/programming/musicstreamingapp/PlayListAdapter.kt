@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView.RecyclerListener
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -13,15 +14,15 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.bumptech.glide.Glide
 
-class PlayListAdapter(private val callback: (MusicModel) -> Unit) : ListAdapter<MusicModel, PlayListAdapter.ViewHolder>(diffUtil){
+class PlayListAdapter(private val callback: (MusicModel) -> Unit): ListAdapter<MusicModel, PlayListAdapter.ViewHolder>(diffUtil){
 
-    inner class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(private val view:View): RecyclerView.ViewHolder(view){
 
         fun bind(item: MusicModel) {
 
             val trackTextView = view.findViewById<TextView>(R.id.itemTrackTextView)
             val artistTextView = view.findViewById<TextView>(R.id.itemArtistTextView)
-            val coverImageView = view.findViewById<ImageView>(R.id.itemCoverImageView)
+            val coverImageView = view. findViewById<ImageView>(R.id.itemCoverImageView)
 
             trackTextView.text = item.track
             artistTextView.text = item.artist
@@ -32,14 +33,13 @@ class PlayListAdapter(private val callback: (MusicModel) -> Unit) : ListAdapter<
 
             if (item.isPlaying) {
                 itemView.setBackgroundColor(Color.GRAY)
-            } else {
+            }else {
                 itemView.setBackgroundColor(Color.TRANSPARENT)
             }
 
             itemView.setOnClickListener {
                 callback(item)
             }
-
         }
     }
 
@@ -48,9 +48,9 @@ class PlayListAdapter(private val callback: (MusicModel) -> Unit) : ListAdapter<
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        currentList[position].also { musicModel ->
-            holder.bind(musicModel)
-        }
+       currentList[position].also { musicModel ->
+           holder.bind(musicModel)
+       }
     }
 
     companion object {
@@ -61,9 +61,7 @@ class PlayListAdapter(private val callback: (MusicModel) -> Unit) : ListAdapter<
 
             override fun areContentsTheSame(oldItem: MusicModel, newItem: MusicModel): Boolean {
                 return oldItem == newItem
-
             }
-
 
         }
     }
