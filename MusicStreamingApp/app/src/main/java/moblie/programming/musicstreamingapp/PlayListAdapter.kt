@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.bumptech.glide.Glide
 
-class PlayListAdapter(private val callback: (MusicModel) -> Unit): ListAdapter<MusicModel, PlayListAdapter.ViewHolder>(diffUtil){
-
+class PlayListAdapter(private val callback: (MusicModel) -> Unit):
+    ListAdapter<MusicModel, PlayListAdapter.ViewHolder>(diffUtil){
     inner class ViewHolder(private val view:View): RecyclerView.ViewHolder(view){
 
         fun bind(item: MusicModel) {
@@ -33,7 +33,7 @@ class PlayListAdapter(private val callback: (MusicModel) -> Unit): ListAdapter<M
 
             if (item.isPlaying) {
                 itemView.setBackgroundColor(Color.GRAY)
-            }else {
+            } else {
                 itemView.setBackgroundColor(Color.TRANSPARENT)
             }
 
@@ -44,7 +44,8 @@ class PlayListAdapter(private val callback: (MusicModel) -> Unit): ListAdapter<M
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_music, parent, false))
+        return ViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item_music, parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
